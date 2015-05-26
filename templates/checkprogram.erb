@@ -1,0 +1,13 @@
+## This file is managed by Puppet
+
+check program <%= @real_program %> with path <%= @path %>
+    <% if !@startprogram.nil? -%> 
+    start program  "<%= @startprogram %>" as uid <%= @real_processuid %> and gid <%= @real_processgid %>
+    <%- end -%>
+    <% if !@stopprogram.nil? -%> 
+    stop program  "<%= @stopprogram %>" as uid <%= @real_processuid %> and gid <%= @real_processgid %>
+    <%- end -%>
+    if status <%= @exitcode %> for <%= @cycles %> cycles then <%= @failaction %>
+    <%- [@depends].flatten.each do |singledepend| -%>
+    depends on <%= singledepend %>
+    <%- end -%>
